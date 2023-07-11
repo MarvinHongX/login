@@ -7,8 +7,8 @@ export async function login(username: string, password: string): Promise<UserInf
     const testResponse: UserInfo = {
         id: 1,
         username: username,
-        email: 'hong@marvinhong.com',
-    };  
+        email: username + '@marvinhong.com',
+    };
     return testResponse
     
     //const response = await axios.post('/apiURL/login', { username, password });

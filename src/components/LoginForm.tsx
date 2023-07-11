@@ -3,7 +3,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { login } from '../api/authAPI';
+import { loginUser } from '../services/authService';
 import { setUserInfo } from '../store/actions/authActions';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,10 +19,8 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = async (data: LoginFormInputs) => {
     try {
-      const userInfo = await login(data.username, data.password);
-      console.log('userinfo1',userInfo)
+      const userInfo = await loginUser(data.username, data.password); 
       dispatch(setUserInfo(userInfo));
-      console.log('userinfo2',userInfo)
       navigate('/'); 
     } catch (error) {
       // Handle login error

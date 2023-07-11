@@ -2,12 +2,12 @@
 
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store/reducers/authReducer';
 import { useNavigate } from 'react-router-dom';
 import { clearUserInfo } from '../store/actions/authActions';
+import { RootState } from "../store";
 
 const UserInfo: React.FC = () => {
-  const userInfo = useSelector((state: RootState) => state.userInfo);
+  const userInfo = useSelector((state: RootState) => state.auth.userInfo); 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -19,7 +19,6 @@ const UserInfo: React.FC = () => {
 
   const handleLogout = () => {
     dispatch(clearUserInfo());
-    //navigate('/login'); 
   };
 
   return (

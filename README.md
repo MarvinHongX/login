@@ -6,6 +6,9 @@ npx create-react-app login --template typescript
 Redux 및 관련 패키지 설치:
 npm install redux react-redux redux-thunk @types/react-redux @types/redux-thunk
 
+redux toolkit 설치:
+npm install @reduxjs/toolkit
+
 
 React Form Hook 설치:
 npm install react-hook-form  

@@ -2,33 +2,29 @@
 
 import { UserInfo, AuthActionTypes, SET_USER_INFO, CLEAR_USER_INFO } from '../types/authTypes';
 
-export interface RootState {
-  userInfo: UserInfo | null;
+interface AuthState { 
+    userInfo: UserInfo | null;
 }
 
-const initialState: RootState = {
+const initialState: AuthState = {
   userInfo: null,
 };
+
 
 const authReducer = (
   state = initialState,
   action: AuthActionTypes
-): RootState => {
+): AuthState => {
   switch (action.type) {
     case SET_USER_INFO:
       return {
         ...state,
-        //userInfo: action.payload,
-        userInfo:  {
-          id: 1,
-          username: "Hong",
-          email: "Hong@hong.com",
-        }
+          userInfo: action.payload,
       };
     case CLEAR_USER_INFO:
       return {
         ...state,
-        userInfo: null,
+          userInfo: null,
       };
     default:
       return state;
