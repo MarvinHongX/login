@@ -4,8 +4,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../services/authService';
-import { setUserInfo } from '../store/actions/authActions';
+import { setUserInfo, clearUserInfo } from '../store/actions/authActions';
 import { useNavigate } from 'react-router-dom';
+import { setCookie, getCookie, deleteCookie } from '../utils/cookieUtils';
+import { getUserSessionInfo } from '../services/authService';
+import { UserInfo } from '../store/types/authTypes';
 
 interface LoginFormInputs {
   username: string;
@@ -19,13 +22,36 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = async (data: LoginFormInputs) => {
     try {
-      const userInfo = await loginUser(data.username, data.password); 
+      const userInfo = await loginUser(data.username, data.password);
+      setCookie('sessionToken', userInfo.token, 7);
       dispatch(setUserInfo(userInfo));
-      navigate('/'); 
+      navigate('/');
     } catch (error) {
       // Handle login error
     }
   };
+
+  React.useEffect(() => {
+    const token = getCookie('sessionToken');
+    if (token) {
+      getUserSessionInfo(token)
+        .then((userSessionInfo: UserInfo | null) => {
+          if (userSessionInfo) {
+            dispatch(setUserInfo(userSessionInfo));
+          } else {
+            deleteCookie('sessionToken');
+            dispatch(clearUserInfo());
+          }
+        })
+        .catch((error) => {
+          console.error('Failed to get user session info:', error);
+          deleteCookie('sessionToken');
+          dispatch(clearUserInfo());
+        });
+    } else {
+      dispatch(clearUserInfo());
+    }
+  }, [dispatch]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

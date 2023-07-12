@@ -4,6 +4,7 @@ export interface UserInfo {
   id: number;
   username: string;
   email: string;
+  token: string; 
 }
 
 export const SET_USER_INFO = 'SET_USER_INFO';

@@ -2,14 +2,13 @@
 
 import { UserInfo, AuthActionTypes, SET_USER_INFO, CLEAR_USER_INFO } from '../types/authTypes';
 
-interface AuthState { 
-    userInfo: UserInfo | null;
+interface AuthState {
+  userInfo: UserInfo | null;
 }
 
 const initialState: AuthState = {
   userInfo: null,
 };
-
 
 const authReducer = (
   state = initialState,
@@ -19,12 +18,12 @@ const authReducer = (
     case SET_USER_INFO:
       return {
         ...state,
-          userInfo: action.payload,
+        userInfo: action.payload,
       };
     case CLEAR_USER_INFO:
       return {
         ...state,
-          userInfo: null,
+        userInfo: null,
       };
     default:
       return state;
